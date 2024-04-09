@@ -2,12 +2,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInValidation } from "../../../validation";
+import { ISignIn } from "../../../types";
+import { useLogInMutation } from "../../../store/services/authQuery.ts";
 
-interface ISignIn {
-  email: string;
-  password: string;
-}
 const SignIn = () => {
+  const [SignIn] = useLogInMutation();
   const {
     register,
     handleSubmit,
@@ -19,7 +18,9 @@ const SignIn = () => {
       password: "",
     },
   });
-  const onSubmit = (data: ISignIn) => console.log(data);
+  const onSubmit = (values: ISignIn) => {
+    SignIn(values);
+  };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -51,14 +52,6 @@ const SignIn = () => {
               <label htmlFor="password" className="form_label">
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-primary-600 hover:text-primary-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
             </div>
             <div className="mt-2">
               <input
