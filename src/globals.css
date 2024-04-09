@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply box-border list-none p-0 m-0 scroll-smooth;
+    }
+
+    body {
+        @apply min-h-screen font-inter;
+    }
+}
+
+@layer components {
+    /* Form */
+    .form_label {
+        @apply block text-sm font-medium leading-6 text-dark-4 !important
+    }
+
+    .form_input {
+        @apply block h-10 w-full rounded-md border-none py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-offset-1 focus:ring-blue-500 focus:border-blue-500 ring-offset-light-3 outline-none p-2 !important;
+    }
+
+    .form_message {
+        @apply text-red-main text-sm !important;
+    }
+
+    /* Button */
+    .main_button {
+        @apply flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 !important;
+    }
+}
