@@ -11,6 +11,7 @@ import {
 } from "./_root/features";
 import SignIn from "./_auth/features/SignIn";
 import { PathEnums } from "./constants";
+import NotFoundPage from "./components/NotFoundPage.tsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path={PathEnums.CreatePost} element={<CreatePost />} />
           <Route path={`${PathEnums.Posts}/:id`} element={<PostProfile />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </main>
   );
