@@ -4,9 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInValidation } from "../../../validation";
 import { ISignIn } from "../../../types";
 import { useLogInMutation } from "../../../store/services/authQuery.ts";
+import Loader from "../../../components/Loader.tsx";
 
 const SignIn = () => {
-  const [SignIn] = useLogInMutation();
+  const [SignIn, { isLoading }] = useLogInMutation();
   const {
     register,
     handleSubmit,
@@ -66,7 +67,13 @@ const SignIn = () => {
 
           <div>
             <button type="submit" className="main_button">
-              Sign in
+              {isLoading ? (
+                <div className="flex-center gap-2">
+                  <Loader />
+                </div>
+              ) : (
+                "Sign in"
+              )}
             </button>
           </div>
         </form>
