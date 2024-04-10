@@ -1,8 +1,6 @@
-import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ISignIn, ITokenStructure } from "../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ITokenStructure } from "../../types";
 import { getToken } from "../localStorage.ts";
-
-export const requestSignIn = createAction<ISignIn>(" requestSignIn");
 
 interface IAuthState {
   accessToken: string | null;
