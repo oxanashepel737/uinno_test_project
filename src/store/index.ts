@@ -8,6 +8,7 @@ import type {} from "@reduxjs/toolkit";
 import { authApiService } from "./services/authQuery.ts";
 import authSlice from "./features/authSlice.ts";
 import toastSlice, { showToast } from "./features/toastSlice.ts";
+import { postsApiService } from "./services/postsQuery.ts";
 
 interface IApiErrorPayload {
   data: {
@@ -38,12 +39,14 @@ export const rtkQueryErrorLogger: Middleware =
 export const store = configureStore({
   reducer: {
     [authApiService.reducerPath]: authApiService.reducer,
+    [postsApiService.reducerPath]: postsApiService.reducer,
     authState: authSlice,
     toastState: toastSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
       authApiService.middleware,
+      postsApiService.middleware,
       rtkQueryErrorLogger,
     ]),
 });

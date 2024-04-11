@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInValidation } from "../../../validation";
 import { ISignIn } from "../../../types";
 import { useLogInMutation } from "../../../store/services/authQuery.ts";
-import Loader from "../../../components/Loader.tsx";
+import { Loader } from "../../../components/Loader.tsx";
 
 const SignIn = () => {
   const [SignIn, { isLoading }] = useLogInMutation();
