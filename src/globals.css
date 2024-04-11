@@ -17,20 +17,27 @@
 @layer components {
     /* Form */
     .form_label {
-        @apply block text-sm font-medium leading-6 text-dark-4 !important
+        @apply block text-sm font-medium leading-6 text-dark-4
     }
 
     .form_input {
-        @apply block h-10 w-full rounded-md border-none py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-offset-1 focus:ring-blue-500 focus:border-blue-500 ring-offset-light-3 outline-none p-2 !important;
+        @apply block h-10 w-full rounded-md border-none py-1.5 text-dark-4 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-offset-1 focus:ring-blue-500 focus:border-blue-500 ring-offset-light-3 outline-none p-2
     }
 
     .form_message {
-        @apply text-red-main text-sm !important;
+        @apply text-red-1 text-sm
+    }
+
+    .form_textarea {
+        @apply block w-full rounded-md border-none py-1.5 text-dark-4 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-offset-1 focus:ring-blue-500 focus:border-blue-500 ring-offset-light-3 outline-none p-2
     }
 
     /* Button */
     .main_button {
-        @apply flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 !important;
+        @apply rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600
+    }
+    .cancel_button {
+        @apply text-sm rounded-md font-semibold leading-6 text-white bg-red-2 px-3 py-1.5 shadow-sm hover:bg-red-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-2
     }
     /* Header */
     .navbar {
@@ -47,6 +54,9 @@
 @layer utilities {
     .h1-semibold {
         @apply text-[36px] font-semibold leading-[140%] tracking-tighter;
+    }
+    .h2-semibold {
+        @apply text-[30px] font-semibold leading-[140%] tracking-tighter;
     }
     .h3 {
         @apply text-[24px] leading-[140%] tracking-tighter;

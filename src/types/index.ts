@@ -17,3 +17,8 @@ export interface IPost {
   created_at: string;
   updated_at: string;
 }
+
+export interface IPostPayload {
+  title: string;
+  content: string;
+}
