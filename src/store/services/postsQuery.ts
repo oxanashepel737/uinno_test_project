@@ -14,7 +14,7 @@ export const postsApiService = createApi({
     },
   }),
   endpoints: (build) => ({
-    GetAllPosts: build.query<IPost[], void>({
+    getAllPosts: build.query<IPost[], void>({
       query() {
         return {
           url: `/posts`,
@@ -33,7 +33,16 @@ export const postsApiService = createApi({
         };
       },
     }),
+    getPost: build.query<IPost, number>({
+      query(id) {
+        return {
+          url: `/posts/${id}`,
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetAllPostsQuery, useCreatePostMutation } = postsApiService;
+export const { useGetAllPostsQuery, useCreatePostMutation, useGetPostQuery } =
+  postsApiService;

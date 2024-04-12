@@ -66,17 +66,15 @@ const SignIn = () => {
               </div>
             </div>
 
-            <div>
-              <button type="submit" className="main_button">
-                {isLoading ? (
-                  <div className="flex-center gap-2">
-                    <Loader />
-                  </div>
-                ) : (
-                  "Sign in"
-                )}
-              </button>
-            </div>
+            <button type="submit" className="main_button w-full">
+              {isLoading ? (
+                <div className="flex-center gap-2">
+                  <Loader />
+                </div>
+              ) : (
+                "Sign in"
+              )}
+            </button>
           </form>
         </div>
       </div>
