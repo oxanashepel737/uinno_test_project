@@ -22,3 +22,12 @@ export interface IPostPayload {
   title: string;
   content: string;
 }
+
+export interface IUser {
+  id: number;
+  fullName: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}

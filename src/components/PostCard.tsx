@@ -8,7 +8,7 @@ const PostCard = ({ data }: { data: IPost }) => {
   };
   return (
     <div className="flex px-4">
-      <div className="max-w-sm overflow-hidden rounded-xl bg-white shadow-md duration-200 hover:scale-105 hover:shadow-xl">
+      <div className="card_container">
         <div className="p-5">
           <h3 className="h3">{data?.title}</h3>
           <div className="text-medium mb-5 text-dark-4 h-36">

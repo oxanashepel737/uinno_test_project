@@ -9,6 +9,7 @@ import { authApiService } from "./services/authQuery.ts";
 import authSlice from "./features/authSlice.ts";
 import toastSlice, { showToast } from "./features/toastSlice.ts";
 import { postsApiService } from "./services/postsQuery.ts";
+import { usersApiService } from "./services/usersQuery.ts";
 
 interface IApiErrorPayload {
   data: {
@@ -40,6 +41,7 @@ export const store = configureStore({
   reducer: {
     [authApiService.reducerPath]: authApiService.reducer,
     [postsApiService.reducerPath]: postsApiService.reducer,
+    [usersApiService.reducerPath]: usersApiService.reducer,
     authState: authSlice,
     toastState: toastSlice,
   },
@@ -47,6 +49,7 @@ export const store = configureStore({
     getDefaultMiddleware({}).concat([
       authApiService.middleware,
       postsApiService.middleware,
+      usersApiService.middleware,
       rtkQueryErrorLogger,
     ]),
 });
