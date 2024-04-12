@@ -6,6 +6,7 @@ import { getToken } from "../localStorage.ts";
 const apiToken = getToken();
 export const usersApiService = createApi({
   reducerPath: "usersApi",
+  tagTypes: ["Users"],
   baseQuery: fetchBaseQuery({
     baseUrl: `${configuration.apiURL}/api`,
     prepareHeaders(headers) {
@@ -22,6 +23,10 @@ export const usersApiService = createApi({
           credentials: "include",
         };
       },
+      providesTags: (result = []) => [
+        ...result.map(({ id }) => ({ type: "Users", id }) as const),
+        { type: "Users" as const, id: "LIST" },
+      ],
     }),
   }),
 });
