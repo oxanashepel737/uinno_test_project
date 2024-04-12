@@ -51,7 +51,7 @@
    }
     /* Card */
     .card_container {
-        @apply max-w-sm overflow-hidden rounded-xl bg-white shadow-md duration-200 hover:scale-105 hover:shadow-xl
+        @apply max-w-sm md:w-dvw overflow-hidden rounded-xl bg-white shadow-md duration-200 hover:scale-105 hover:shadow-xl
     }
 }
 

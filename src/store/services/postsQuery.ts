@@ -46,9 +46,31 @@ export const postsApiService = createApi({
           credentials: "include",
         };
       },
+      providesTags: [{ type: "Posts", id: "LIST" }],
+    }),
+    updatePost: build.mutation<IPost, { id: number; post: IPostPayload }>({
+      query({ id, post }) {
+        return {
+          url: `/posts/${id}`,
+          method: "PATCH",
+          credentials: "same-origin",
+          body: post,
+        };
+      },
+      invalidatesTags: (result, _error, { id }) =>
+        result
+          ? [
+              { type: "Posts", id },
+              { type: "Posts", id: "LIST" },
+            ]
+          : [{ type: "Posts", id: "LIST" }],
     }),
   }),
 });
 
-export const { useGetAllPostsQuery, useCreatePostMutation, useGetPostQuery } =
-  postsApiService;
+export const {
+  useGetAllPostsQuery,
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useGetPostQuery,
+} = postsApiService;

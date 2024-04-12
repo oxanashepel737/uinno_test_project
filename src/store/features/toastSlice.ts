@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IToast {
-  type: "error" | "info";
+  type: "error" | "success";
   text: string;
 }
 

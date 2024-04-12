@@ -7,7 +7,7 @@ const PostCard = ({ data }: { data: IPost }) => {
     navigate(`/posts/${data?.id}`);
   };
   return (
-    <div className="flex px-4">
+    <div className="flex p-4">
       <div className="card_container">
         <div className="p-5">
           <h3 className="h3">{data?.title}</h3>
