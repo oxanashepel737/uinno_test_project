@@ -39,7 +39,38 @@ export const usersApiService = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
+    getUser: build.query<IUser, number>({
+      query(id) {
+        return {
+          url: `/users/${id}`,
+          credentials: "include",
+        };
+      },
+      providesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    updateUser: build.mutation<IUser, { id: number; user: IUserPayload }>({
+      query({ id, user }) {
+        return {
+          url: `/users/${id}`,
+          method: "PATCH",
+          credentials: "same-origin",
+          body: user,
+        };
+      },
+      invalidatesTags: (result, _error, { id }) =>
+        result
+          ? [
+              { type: "Users", id },
+              { type: "Users", id: "LIST" },
+            ]
+          : [{ type: "Users", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery, useCreateUserMutation } = usersApiService;
+export const {
+  useGetAllUsersQuery,
+  useCreateUserMutation,
+  useGetUserQuery,
+  useUpdateUserMutation,
+} = usersApiService;

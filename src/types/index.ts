@@ -35,6 +35,6 @@ export interface IUser {
 export interface IUserPayload {
   fullName: string;
   email: string;
-  password: string;
+  password?: string;
   role: string;
 }

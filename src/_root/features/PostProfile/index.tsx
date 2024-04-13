@@ -1,5 +1,5 @@
 import { BigLoader } from "../../../components/Loader.tsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   useGetPostQuery,
   useUpdatePostMutation,
@@ -12,7 +12,6 @@ import PostForm from "../../../components/PostForm.tsx";
 
 const PostProfile = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [updatePost, { isSuccess, isLoading: isLoadingUpdate }] =
     useUpdatePostMutation();
@@ -37,7 +36,7 @@ const PostProfile = () => {
         }),
       );
     }
-  }, [dispatch, isSuccess, navigate]);
+  }, [dispatch, isSuccess]);
 
   if (isLoadingGet) {
     return <BigLoader />;

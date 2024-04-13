@@ -16,3 +16,13 @@ export const userValidation = z.object({
   password: z.string().min(6, "Password must be at least 6 characters."),
   role: z.string().trim().min(1, { message: "Required" }),
 });
+export const userUpdateValidation = z.object({
+  fullName: z.string().min(2, "Too short"),
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters.")
+    .optional()
+    .or(z.literal("")),
+  role: z.string().trim().min(1, { message: "Required" }),
+});

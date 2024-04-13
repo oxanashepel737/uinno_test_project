@@ -1,6 +1,11 @@
 import { IUser } from "../types";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = ({ data }: { data: IUser }) => {
+  const navigate = useNavigate();
+  const onGoToUpdateUserPage = () => {
+    navigate(`/users/${data?.id}`);
+  };
   return (
     <div className="flex px-4">
       <div className="card_container">
@@ -25,7 +30,9 @@ const UserCard = ({ data }: { data: IUser }) => {
           </div>
         </div>
         <div className="flex-center space-x-6 py-4 px-2">
-          <button className="main_button w-28">Update</button>
+          <button className="main_button w-28" onClick={onGoToUpdateUserPage}>
+            Update
+          </button>
           <button className="cancel_button w-28">Delete</button>
         </div>
       </div>

@@ -3,23 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { BigLoader } from "../../../components/Loader.tsx";
 import PostCard from "../../../components/PostCard.tsx";
 import ListPageComponent from "../../../components/ListPageComponent.tsx";
+import { useCallback } from "react";
 
 const PostsList = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllPostsQuery();
+  const CardSection = useCallback(() => {
+    return (
+      <section className="flex flex-wrap content-start py-10">
+        {data?.map((post) => <PostCard key={post.id} data={post} />)}
+      </section>
+    );
+  }, [data]);
   const onGoToCreatePost = () => {
     navigate("/create-post");
   };
   if (isLoading) {
     return <BigLoader />;
   }
-  const CardSection = () => {
-    return (
-      <section className="flex flex-wrap content-start py-10">
-        {data?.map((post) => <PostCard key={post.id} data={post} />)}
-      </section>
-    );
-  };
   return (
     <>
       <ListPageComponent

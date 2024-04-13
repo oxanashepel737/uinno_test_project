@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { userValidation } from "../validation";
+import { userUpdateValidation, userValidation } from "../validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "./Loader.tsx";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +16,14 @@ interface IUserForm {
 
 const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
   const navigate = useNavigate();
+  const validation = data ? userUpdateValidation : userValidation;
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<z.infer<typeof userValidation>>({
-    resolver: zodResolver(userValidation),
+  } = useForm<z.infer<typeof validation>>({
+    resolver: zodResolver(validation),
     defaultValues: {
       fullName: "",
       email: "",
@@ -81,7 +82,7 @@ const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
                 <input
                   type="password"
                   className="form_input"
-                  {...register("password")}
+                  {...register("password", { required: !data })}
                 />
                 <p className="form_message">{errors.password?.message}</p>
               </div>
