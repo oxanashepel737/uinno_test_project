@@ -31,3 +31,10 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IUserPayload {
+  fullName: string;
+  email: string;
+  password: string;
+  role: string;
+}
