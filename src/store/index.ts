@@ -27,7 +27,7 @@ export const rtkQueryErrorLogger: Middleware =
           type: "error",
           text:
             "data" in (action.payload as IApiErrorPayload)
-              ? (action.payload as IApiErrorPayload).data.errors
+              ? (action.payload as IApiErrorPayload).data?.errors
                   .map((e) => e.message)
                   .join("\n")
               : String(action.error.message),

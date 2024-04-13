@@ -30,8 +30,8 @@ const PostCard = ({ data }: { data: IPost }) => {
           onDelete={() => onDeletePost()}
         />
       )}
-      <div className="flex p-4">
-        <div className="card_container">
+      <div className="card_container">
+        <div className="card">
           <div className="p-5">
             <h3 className="h3">{data?.title}</h3>
             <div className="text-medium mb-5 text-dark-4 h-36">

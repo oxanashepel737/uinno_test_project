@@ -3,13 +3,13 @@ import configuration from "../../configuration";
 import { IUser, IUserPayload } from "../../types";
 import { getToken } from "../localStorage.ts";
 
-const apiToken = getToken();
 export const usersApiService = createApi({
   reducerPath: "usersApi",
   tagTypes: ["Users"],
   baseQuery: fetchBaseQuery({
     baseUrl: `${configuration.apiURL}/api`,
     prepareHeaders(headers) {
+      const apiToken = getToken();
       headers.set("Accept", "application/json");
       headers.set("Authorization", `Bearer ${apiToken}`);
     },
@@ -65,6 +65,16 @@ export const usersApiService = createApi({
             ]
           : [{ type: "Users", id: "LIST" }],
     }),
+    deleteUser: build.mutation<void, number>({
+      query(id) {
+        return {
+          url: `/users/${id}`,
+          method: "DELETE",
+          credentials: "include",
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
   }),
 });
 
@@ -73,4 +83,5 @@ export const {
   useCreateUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,
+  useDeleteUserMutation,
 } = usersApiService;

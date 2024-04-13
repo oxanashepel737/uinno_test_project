@@ -3,12 +3,16 @@ import { PathEnums } from "../constants";
 import { useDispatch } from "react-redux";
 import { authApiService } from "../store/services/authQuery.ts";
 import { clearSession } from "../store/features/authSlice.ts";
+import { postsApiService } from "../store/services/postsQuery.ts";
+import { usersApiService } from "../store/services/usersQuery.ts";
 
 const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const onLogout = () => {
     dispatch(authApiService.util.resetApiState());
+    dispatch(postsApiService.util.resetApiState());
+    dispatch(usersApiService.util.resetApiState());
     localStorage.clear();
     dispatch(clearSession());
   };
