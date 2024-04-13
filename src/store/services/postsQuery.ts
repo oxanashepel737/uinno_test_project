@@ -65,6 +65,16 @@ export const postsApiService = createApi({
             ]
           : [{ type: "Posts", id: "LIST" }],
     }),
+    deletePost: build.mutation<void, number>({
+      query(id) {
+        return {
+          url: `/posts/${id}`,
+          method: "DELETE",
+          credentials: "include",
+        };
+      },
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+    }),
   }),
 });
 
@@ -73,4 +83,5 @@ export const {
   useCreatePostMutation,
   useUpdatePostMutation,
   useGetPostQuery,
+  useDeletePostMutation,
 } = postsApiService;

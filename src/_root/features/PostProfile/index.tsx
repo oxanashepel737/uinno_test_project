@@ -4,7 +4,7 @@ import {
   useGetPostQuery,
   useUpdatePostMutation,
 } from "../../../store/services/postsQuery.ts";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { IPostPayload } from "../../../types";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../../store/features/toastSlice.ts";
@@ -17,7 +17,17 @@ const PostProfile = () => {
   const [updatePost, { isSuccess, isLoading: isLoadingUpdate }] =
     useUpdatePostMutation();
   const { data, isLoading: isLoadingGet } = useGetPostQuery(Number(id));
-  console.log(data);
+
+  const onSubmit = useCallback(
+    (values: IPostPayload) => {
+      updatePost({
+        id: Number(id),
+        post: values,
+      });
+    },
+    [id, updatePost],
+  );
+
   useEffect(() => {
     if (isSuccess) {
       dispatch(
@@ -32,13 +42,6 @@ const PostProfile = () => {
   if (isLoadingGet) {
     return <BigLoader />;
   }
-
-  const onSubmit = (values: IPostPayload) => {
-    updatePost({
-      id: Number(id),
-      post: values,
-    });
-  };
 
   return (
     <PostForm
