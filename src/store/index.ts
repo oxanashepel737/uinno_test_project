@@ -6,7 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import type {} from "@reduxjs/toolkit";
 import { authApiService } from "./services/authQuery.ts";
-import authSlice from "./features/authSlice.ts";
 import toastSlice, { showToast } from "./features/toastSlice.ts";
 import { postsApiService } from "./services/postsQuery.ts";
 import { usersApiService } from "./services/usersQuery.ts";
@@ -27,9 +26,9 @@ export const rtkQueryErrorLogger: Middleware =
           type: "error",
           text:
             "data" in (action.payload as IApiErrorPayload)
-              ? (action.payload as IApiErrorPayload).data?.errors
-                  .map((e) => e.message)
-                  .join("\n")
+              ? (action.payload as IApiErrorPayload)?.data?.errors
+                  ?.map((e) => e.message)
+                  ?.join("\n") || "Unknown error"
               : String(action.error.message),
         }),
       );
@@ -42,7 +41,6 @@ export const store = configureStore({
     [authApiService.reducerPath]: authApiService.reducer,
     [postsApiService.reducerPath]: postsApiService.reducer,
     [usersApiService.reducerPath]: usersApiService.reducer,
-    authState: authSlice,
     toastState: toastSlice,
   },
   middleware: (getDefaultMiddleware) =>

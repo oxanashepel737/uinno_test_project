@@ -1,26 +1,17 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import configuration from "../../configuration";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { IUser, IUserPayload } from "../../types";
-import { getToken } from "../localStorage.ts";
+import { BaseQuery } from "./baseQuery.ts";
 
 export const usersApiService = createApi({
   reducerPath: "usersApi",
   tagTypes: ["Users"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${configuration.apiURL}/api`,
-    prepareHeaders(headers) {
-      const apiToken = getToken();
-      headers.set("Accept", "application/json");
-      headers.set("Authorization", `Bearer ${apiToken}`);
-    },
-  }),
+  baseQuery: BaseQuery,
   endpoints: (build) => ({
     getAllUsers: build.query<IUser[], void>({
       query() {
         return {
           url: `/users`,
           method: "GET",
-          credentials: "include",
         };
       },
       providesTags: (result = []) => [
@@ -33,7 +24,6 @@ export const usersApiService = createApi({
         return {
           url: "/users",
           method: "POST",
-          credentials: "include",
           body: user,
         };
       },
@@ -43,7 +33,6 @@ export const usersApiService = createApi({
       query(id) {
         return {
           url: `/users/${id}`,
-          credentials: "include",
         };
       },
       providesTags: [{ type: "Users", id: "LIST" }],
@@ -53,7 +42,6 @@ export const usersApiService = createApi({
         return {
           url: `/users/${id}`,
           method: "PATCH",
-          credentials: "same-origin",
           body: user,
         };
       },
@@ -70,7 +58,6 @@ export const usersApiService = createApi({
         return {
           url: `/users/${id}`,
           method: "DELETE",
-          credentials: "include",
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],

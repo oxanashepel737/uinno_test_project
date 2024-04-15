@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import Modal from "./Modal.tsx";
 import { useDeletePostMutation } from "../store/services/postsQuery.ts";
+import { useAuthMeQuery } from "../store/services/authQuery.ts";
+import { BigLoader } from "./Loader.tsx";
 
 const PostCard = ({ data }: { data: IPost }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [deletePost] = useDeletePostMutation();
+  const { isLoading, data: dataMe } = useAuthMeQuery();
   const navigate = useNavigate();
   const onGoToUpdatePostPage = () => {
     navigate(`/posts/${data?.id}`);
@@ -20,6 +23,9 @@ const PostCard = ({ data }: { data: IPost }) => {
   const onDeletePost = useCallback(() => {
     deletePost(data?.id);
   }, [data?.id, deletePost]);
+  if (isLoading) {
+    return <BigLoader />;
+  }
   return (
     <>
       {isOpen && (
@@ -34,23 +40,25 @@ const PostCard = ({ data }: { data: IPost }) => {
         <div className="card">
           <div className="p-5">
             <h3 className="h3">{data?.title}</h3>
-            <div className="text-medium mb-5 text-dark-4 h-36">
+            <div className="text-medium mb-5 text-dark-4 h-28 text-wrap">
               {data?.content}
             </div>
-            <div className="flex-center space-x-6">
-              <button
-                className="main_button w-28"
-                onClick={onGoToUpdatePostPage}
-              >
-                Update
-              </button>
-              <button
-                className="cancel_button w-28"
-                onClick={onOpenDeleteModal}
-              >
-                Delete
-              </button>
-            </div>
+            {dataMe?.role === "admin" || dataMe?.id === data.userId ? (
+              <div className="flex-center space-x-6">
+                <button
+                  className="main_button w-28"
+                  onClick={onGoToUpdatePostPage}
+                >
+                  Update
+                </button>
+                <button
+                  className="cancel_button w-28"
+                  onClick={onOpenDeleteModal}
+                >
+                  Delete
+                </button>
+              </div>
+            ) : undefined}
           </div>
         </div>
       </div>

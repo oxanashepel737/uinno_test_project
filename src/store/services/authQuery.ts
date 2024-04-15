@@ -1,41 +1,34 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import configuration from "../../configuration";
-import { ISignIn, ITokenStructure } from "../../types";
-import { setSession } from "../features/authSlice.ts";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { ISignIn, ITokenStructure, IUser } from "../../types";
 import { setToken } from "../localStorage.ts";
+import { BaseQuery } from "./baseQuery.ts";
 
 export const authApiService = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${configuration.apiURL}/api`,
-    prepareHeaders(headers) {
-      headers.set("Accept", "application/json");
-    },
-  }),
+  baseQuery: BaseQuery,
   endpoints: (build) => ({
     LogIn: build.mutation<ITokenStructure, ISignIn>({
       query: (data) => ({
         url: "/login",
         method: "POST",
         body: data,
-        credentials: "include",
       }),
-      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_args, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           setToken(data.value);
-          dispatch(
-            setSession({
-              accessToken: data.value,
-              tokenStructure: data,
-            }),
-          );
         } catch (error) {
           console.log(error);
         }
       },
     }),
+    AuthMe: build.query<IUser, void>({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useLogInMutation } = authApiService;
+export const { useLogInMutation, useAuthMeQuery } = authApiService;

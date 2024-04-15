@@ -1,26 +1,17 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import configuration from "../../configuration";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { IPost, IPostPayload } from "../../types";
-import { getToken } from "../localStorage.ts";
+import { BaseQuery } from "./baseQuery.ts";
 
 export const postsApiService = createApi({
   reducerPath: "postsApi",
   tagTypes: ["Posts"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${configuration.apiURL}/api`,
-    prepareHeaders(headers) {
-      const apiToken = getToken();
-      headers.set("Accept", "application/json");
-      headers.set("Authorization", `Bearer ${apiToken}`);
-    },
-  }),
+  baseQuery: BaseQuery,
   endpoints: (build) => ({
     getAllPosts: build.query<IPost[], void>({
       query() {
         return {
           url: `/posts`,
           method: "GET",
-          credentials: "include",
         };
       },
       providesTags: (result = []) => [
@@ -33,7 +24,6 @@ export const postsApiService = createApi({
         return {
           url: "/posts",
           method: "POST",
-          credentials: "include",
           body: post,
         };
       },
@@ -43,7 +33,6 @@ export const postsApiService = createApi({
       query(id) {
         return {
           url: `/posts/${id}`,
-          credentials: "include",
         };
       },
       providesTags: [{ type: "Posts", id: "LIST" }],
@@ -53,7 +42,6 @@ export const postsApiService = createApi({
         return {
           url: `/posts/${id}`,
           method: "PATCH",
-          credentials: "same-origin",
           body: post,
         };
       },
@@ -70,7 +58,6 @@ export const postsApiService = createApi({
         return {
           url: `/posts/${id}`,
           method: "DELETE",
-          credentials: "include",
         };
       },
       invalidatesTags: [{ type: "Posts", id: "LIST" }],

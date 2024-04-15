@@ -9,13 +9,20 @@ import { IUserPayload } from "../../../types";
 import { BigLoader } from "../../../components/Loader.tsx";
 import { showToast } from "../../../store/features/toastSlice.ts";
 import { useDispatch } from "react-redux";
+import { useErrorRedirect, useProtectedRoute } from "../../../hook";
 
 const UserProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { data, isLoading: isLoadingGetUser } = useGetUserQuery(Number(id));
+  const {
+    data,
+    isLoading: isLoadingGetUser,
+    error,
+  } = useGetUserQuery(Number(id));
   const [updateUser, { isLoading: isLoadingUpdateUser, isSuccess }] =
     useUpdateUserMutation();
+  useProtectedRoute();
+  useErrorRedirect(error, "/users");
   const onSubmit = useCallback(
     (values: IUserPayload) => {
       updateUser({

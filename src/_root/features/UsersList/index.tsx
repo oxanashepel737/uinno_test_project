@@ -4,10 +4,12 @@ import UserCard from "../../../components/UserCard.tsx";
 import ListPageComponent from "../../../components/ListPageComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
+import { useProtectedRoute } from "../../../hook";
 
 const UsersList = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllUsersQuery();
+  useProtectedRoute();
   const CardSection = useCallback(() => {
     return (
       <section className="flex flex-wrap content-start py-10">

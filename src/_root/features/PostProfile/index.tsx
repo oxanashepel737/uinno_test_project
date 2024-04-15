@@ -9,13 +9,16 @@ import { IPostPayload } from "../../../types";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../../store/features/toastSlice.ts";
 import PostForm from "../../../components/PostForm.tsx";
-
+import { useErrorRedirect, useProtectedParam } from "../../../hook";
 const PostProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
   const [updatePost, { isSuccess, isLoading: isLoadingUpdate }] =
     useUpdatePostMutation();
-  const { data, isLoading: isLoadingGet } = useGetPostQuery(Number(id));
+  const { data, isLoading: isLoadingGet, error } = useGetPostQuery(Number(id));
+  useProtectedParam(Number(data?.userId));
+  useErrorRedirect(error, "/posts");
 
   const onSubmit = useCallback(
     (values: IPostPayload) => {

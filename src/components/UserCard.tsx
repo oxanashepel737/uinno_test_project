@@ -33,7 +33,7 @@ const UserCard = ({ data }: { data: IUser }) => {
       <div className="card_container">
         <div className="card">
           <div className="flex w-full items-center justify-between space-x-6 p-6">
-            <div className="flex-1 truncate">
+            <div className="flex-1 truncate h-28">
               <div className="flex items-center space-x-3">
                 <h3 className="truncate text-sm font-medium text-gray-900">
                   {data.fullName}

@@ -1,21 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
 import { PathEnums } from "../constants";
 import { useDispatch } from "react-redux";
-import { authApiService } from "../store/services/authQuery.ts";
-import { clearSession } from "../store/features/authSlice.ts";
+import { authApiService, useAuthMeQuery } from "../store/services/authQuery.ts";
 import { postsApiService } from "../store/services/postsQuery.ts";
 import { usersApiService } from "../store/services/usersQuery.ts";
+import { BigLoader } from "./Loader.tsx";
 
 const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { isLoading, data } = useAuthMeQuery();
   const onLogout = () => {
     dispatch(authApiService.util.resetApiState());
     dispatch(postsApiService.util.resetApiState());
     dispatch(usersApiService.util.resetApiState());
     localStorage.clear();
-    dispatch(clearSession());
   };
+  if (isLoading) {
+    return <BigLoader />;
+  }
   return (
     <nav className="bg-light-1 border-gray-200 dark:bg-dark-4">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -42,18 +45,20 @@ const Header = () => {
                 Posts
               </Link>
             </li>
-            <li>
-              <Link
-                to={PathEnums.Users}
-                className={
-                  PathEnums.Users === location.pathname
-                    ? "selected_router_link"
-                    : "router_link"
-                }
-              >
-                Users
-              </Link>
-            </li>
+            {data?.role === "admin" && (
+              <li>
+                <Link
+                  to={PathEnums.Users}
+                  className={
+                    PathEnums.Users === location.pathname
+                      ? "selected_router_link"
+                      : "router_link"
+                  }
+                >
+                  Users
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
