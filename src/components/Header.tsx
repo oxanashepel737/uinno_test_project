@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { PathEnums } from "../constants";
 import { useDispatch } from "react-redux";
 import { authApiService, useAuthMeQuery } from "../store/services/authQuery.ts";
+import { clearSession } from "../store/features/authSlice.ts";
 import { postsApiService } from "../store/services/postsQuery.ts";
 import { usersApiService } from "../store/services/usersQuery.ts";
 import { BigLoader } from "./Loader.tsx";
@@ -15,6 +16,7 @@ const Header = () => {
     dispatch(postsApiService.util.resetApiState());
     dispatch(usersApiService.util.resetApiState());
     localStorage.clear();
+    dispatch(clearSession());
   };
   if (isLoading) {
     return <BigLoader />;
