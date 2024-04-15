@@ -37,6 +37,17 @@ module.exports = {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
       },
+      keyframes: {
+        toast: {
+          "0%": { transform: "translateX(-100%)" },
+          "20%": { transform: "translateX(0)" },
+          "80%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+      },
+      animation: {
+        transform_toast: "toast 5s ease-in-out",
+      },
     },
   },
   plugins: [],

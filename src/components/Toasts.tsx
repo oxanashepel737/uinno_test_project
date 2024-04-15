@@ -7,7 +7,7 @@ export const ErrorToast = ({ message }: { message: string }) => {
   return (
     <div
       role="alert"
-      className="rounded border-s-4 border-red-500 bg-red-50 p-4 absolute top-3"
+      className="rounded border-s-4 border-red-500 bg-red-50 p-4 absolute top-3 animate-transform_toast"
     >
       <div className="flex items-center gap-2 text-red-800">
         <img src="/assets/error_icon.svg" alt="Error" />
@@ -21,7 +21,7 @@ export const SuccessToast = ({ message }: { message: string }) => {
   return (
     <div
       role="alert"
-      className="rounded border-s-4 border-green-500 bg-green-50 p-4 absolute top-3"
+      className="rounded border-s-4 border-green-500 bg-green-50 p-4 absolute top-3 animate-transform_toast"
     >
       <div className="flex items-center gap-2 text-green-800">
         <img src="/assets/success_icon.svg" alt="Success" />
