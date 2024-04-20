@@ -40,8 +40,8 @@ const PostCard = ({ data }: { data: IPost }) => {
         <div className="card">
           <div className="p-5">
             <h3 className="h3">{data?.title}</h3>
-            <div className="text-medium mb-5 text-dark-4 h-28 text-wrap">
-              {data?.content}
+            <div className="mb-5 text-dark-4 h-32">
+              <p className="line-clamp-5 text-medium">{data?.content}</p>
             </div>
             {dataMe?.role === "admin" || dataMe?.id === data.userId ? (
               <div className="flex-center space-x-6">

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import AuthLayout from "./_auth/AuthLayout.tsx";
 import RootLayout from "./_root/RootLayout.tsx";
 import {
@@ -23,7 +23,8 @@ function App() {
         </Route>
         {/*private routes*/}
         <Route element={<RootLayout />}>
-          <Route index path={PathEnums.Posts} element={<PostsList />} />
+          <Route path={"/"} element={<Navigate to="/posts" replace />} />
+          <Route index path={"/posts"} element={<PostsList />} />
           <Route path={PathEnums.Users} element={<UsersList />} />
           <Route path={`${PathEnums.Users}/:id`} element={<UserProfile />} />
           <Route path={PathEnums.CreateUser} element={<CreateUser />} />

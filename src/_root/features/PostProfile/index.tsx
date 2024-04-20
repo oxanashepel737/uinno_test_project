@@ -18,7 +18,7 @@ const PostProfile = () => {
     useUpdatePostMutation();
   const { data, isLoading: isLoadingGet, error } = useGetPostQuery(Number(id));
   useProtectedParam(Number(data?.userId));
-  useErrorRedirect(error, "/posts");
+  useErrorRedirect(error, "/");
 
   const onSubmit = useCallback(
     (values: IPostPayload) => {
