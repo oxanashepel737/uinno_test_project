@@ -1,8 +1,8 @@
-import { IUser } from "../types";
+import { User } from "../types";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useDeleteUserMutation } from "../store/services/usersQuery.ts";
-import Modal from "./Modal.tsx";
+import { Modal } from "./Modal.tsx";
 import { DeleteButton, UpdateButton } from "./Buttons.tsx";
 
 const DeleteModalUser = ({
@@ -43,7 +43,7 @@ const useUserCard = ({ id }: { id: number }) => {
   }, [isOpen]);
   return { onChangeStateDeleteModal, onGoToUpdateUserPage, isOpen };
 };
-const UserCard = ({ data }: { data: IUser }) => {
+export const UserCard = ({ data }: { data: User }) => {
   const { isOpen, onGoToUpdateUserPage, onChangeStateDeleteModal } =
     useUserCard({ id: data.id });
   return (
@@ -84,4 +84,3 @@ const UserCard = ({ data }: { data: IUser }) => {
     </>
   );
 };
-export default UserCard;

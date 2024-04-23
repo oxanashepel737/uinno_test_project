@@ -1,7 +1,7 @@
 import { useGetAllUsersQuery } from "../../../store/services/usersQuery.ts";
 import { BigLoader } from "../../../components/Loader.tsx";
-import UserCard from "../../../components/UserCard.tsx";
-import ListPageComponent from "../../../components/ListPageComponent.tsx";
+import { UserCard } from "../../../components/UserCard.tsx";
+import { ListPageComponent } from "../../../components/ListPageComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import { useProtectedRoute } from "../../../hook";
 

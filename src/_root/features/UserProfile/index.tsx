@@ -3,9 +3,9 @@ import {
   useGetUserQuery,
   useUpdateUserMutation,
 } from "../../../store/services/usersQuery.ts";
-import UserForm from "../../../components/UserForm.tsx";
+import { UserForm } from "../../../components/UserForm.tsx";
 import { useCallback, useEffect } from "react";
-import { IUserPayload } from "../../../types";
+import { UserPayload } from "../../../types";
 import { BigLoader } from "../../../components/Loader.tsx";
 import { showToast } from "../../../store/features/toastSlice.ts";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ const UserProfile = () => {
   useProtectedRoute();
   useErrorRedirect(error, "/users");
   const onSubmit = useCallback(
-    (values: IUserPayload) => {
+    (values: UserPayload) => {
       updateUser({
         id: Number(id),
         user: values,

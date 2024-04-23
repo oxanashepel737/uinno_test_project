@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { IUser, IUserPayload } from "../../types";
+import { User, UserPayload } from "../../types";
 import { BaseQuery } from "./baseQuery.ts";
 
 export const usersApiService = createApi({
@@ -7,7 +7,7 @@ export const usersApiService = createApi({
   tagTypes: ["Users"],
   baseQuery: BaseQuery,
   endpoints: (build) => ({
-    getAllUsers: build.query<IUser[], void>({
+    getAllUsers: build.query<User[], void>({
       query() {
         return {
           url: `/users`,
@@ -19,7 +19,7 @@ export const usersApiService = createApi({
         { type: "Users" as const, id: "LIST" },
       ],
     }),
-    createUser: build.mutation<IUser, IUserPayload>({
+    createUser: build.mutation<User, UserPayload>({
       query(user) {
         return {
           url: "/users",
@@ -29,7 +29,7 @@ export const usersApiService = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
-    getUser: build.query<IUser, number>({
+    getUser: build.query<User, number>({
       query(id) {
         return {
           url: `/users/${id}`,
@@ -37,7 +37,7 @@ export const usersApiService = createApi({
       },
       providesTags: [{ type: "Users", id: "LIST" }],
     }),
-    updateUser: build.mutation<IUser, { id: number; user: IUserPayload }>({
+    updateUser: build.mutation<User, { id: number; user: UserPayload }>({
       query({ id, user }) {
         return {
           url: `/users/${id}`,

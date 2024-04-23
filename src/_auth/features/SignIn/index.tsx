@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInValidation } from "../../../validation";
-import { ISignIn } from "../../../types";
+import { SignInStructure } from "../../../types";
 import { useLogInMutation } from "../../../store/services/authQuery.ts";
 import { SaveButton } from "../../../components/Buttons.tsx";
 
-const SignIn = () => {
+export const SignIn = () => {
   const [SignIn, { isLoading }] = useLogInMutation();
   const {
     register,
@@ -19,7 +19,7 @@ const SignIn = () => {
       password: "",
     },
   });
-  const onSubmit = (values: ISignIn) => {
+  const onSubmit = (values: SignInStructure) => {
     SignIn(values);
   };
   return (
@@ -76,4 +76,3 @@ const SignIn = () => {
     </>
   );
 };
-export default SignIn;

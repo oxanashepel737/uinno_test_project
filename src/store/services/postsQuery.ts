@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { IPost, IPostPayload } from "../../types";
+import { Post, PostPayload } from "../../types";
 import { BaseQuery } from "./baseQuery.ts";
 
 export const postsApiService = createApi({
@@ -7,7 +7,7 @@ export const postsApiService = createApi({
   tagTypes: ["Posts"],
   baseQuery: BaseQuery,
   endpoints: (build) => ({
-    getAllPosts: build.query<IPost[], void>({
+    getAllPosts: build.query<Post[], void>({
       query() {
         return {
           url: `/posts`,
@@ -19,7 +19,7 @@ export const postsApiService = createApi({
         { type: "Posts" as const, id: "LIST" },
       ],
     }),
-    createPost: build.mutation<IPost, IPostPayload>({
+    createPost: build.mutation<Post, PostPayload>({
       query(post) {
         return {
           url: "/posts",
@@ -29,7 +29,7 @@ export const postsApiService = createApi({
       },
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
-    getPost: build.query<IPost, number>({
+    getPost: build.query<Post, number>({
       query(id) {
         return {
           url: `/posts/${id}`,
@@ -37,7 +37,7 @@ export const postsApiService = createApi({
       },
       providesTags: [{ type: "Posts", id: "LIST" }],
     }),
-    updatePost: build.mutation<IPost, { id: number; post: IPostPayload }>({
+    updatePost: build.mutation<Post, { id: number; post: PostPayload }>({
       query({ id, post }) {
         return {
           url: `/posts/${id}`,

@@ -1,6 +1,6 @@
-import UserForm from "../../../components/UserForm.tsx";
+import { UserForm } from "../../../components/UserForm.tsx";
 import { useCallback, useEffect } from "react";
-import { IUserPayload } from "../../../types";
+import { UserPayload } from "../../../types";
 import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../../store/services/usersQuery.ts";
 import { useProtectedRoute } from "../../../hook";
@@ -15,7 +15,7 @@ const CreateUser = () => {
     }
   }, [isSuccess, navigate]);
   const onSubmit = useCallback(
-    (values: IUserPayload) => {
+    (values: UserPayload) => {
       createUser(values);
     },
     [createUser],

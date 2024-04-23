@@ -10,11 +10,11 @@ import toastSlice, { showToast } from "./features/toastSlice.ts";
 import { postsApiService } from "./services/postsQuery.ts";
 import { usersApiService } from "./services/usersQuery.ts";
 
-interface IApiErrorPayload {
+type ApiErrorPayload = {
   data: {
     errors: { message: string }[];
   };
-}
+};
 
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
@@ -25,8 +25,8 @@ export const rtkQueryErrorLogger: Middleware =
         showToast({
           type: "error",
           text:
-            "data" in (action.payload as IApiErrorPayload)
-              ? (action.payload as IApiErrorPayload)?.data?.errors
+            "data" in (action.payload as ApiErrorPayload)
+              ? (action.payload as ApiErrorPayload)?.data?.errors
                   ?.map((e) => e.message)
                   ?.join("\n") || "Unknown error"
               : String(action.error.message),

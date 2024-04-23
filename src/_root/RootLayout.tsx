@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import Header from "../components/Header.tsx";
+import { Header } from "../components/Header.tsx";
 import { useAppSelector } from "../store/hooks.ts";
 
-const RootLayout = () => {
+export const RootLayout = () => {
   const isAuthorized = useAppSelector((state) => state.authState.accessToken);
   return (
     <>
@@ -19,4 +19,3 @@ const RootLayout = () => {
     </>
   );
 };
-export default RootLayout;

@@ -5,10 +5,10 @@ import {
   useUpdatePostMutation,
 } from "../../../store/services/postsQuery.ts";
 import { useCallback, useEffect } from "react";
-import { IPostPayload } from "../../../types";
+import { PostPayload } from "../../../types";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../../store/features/toastSlice.ts";
-import PostForm from "../../../components/PostForm.tsx";
+import { PostForm } from "../../../components/PostForm.tsx";
 import { useErrorRedirect, useProtectedParam } from "../../../hook";
 const PostProfile = () => {
   const { id } = useParams();
@@ -21,7 +21,7 @@ const PostProfile = () => {
   useErrorRedirect(error, "/");
 
   const onSubmit = useCallback(
-    (values: IPostPayload) => {
+    (values: PostPayload) => {
       updatePost({
         id: Number(id),
         post: values,

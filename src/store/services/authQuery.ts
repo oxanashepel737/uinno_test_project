@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { ISignIn, ITokenStructure, IUser } from "../../types";
+import { SignInStructure, TokenStructure, User } from "../../types";
 import { setSession } from "../features/authSlice.ts";
 import { setToken } from "../localStorage.ts";
 import { BaseQuery } from "./baseQuery.ts";
@@ -8,7 +8,7 @@ export const authApiService = createApi({
   reducerPath: "authApi",
   baseQuery: BaseQuery,
   endpoints: (build) => ({
-    LogIn: build.mutation<ITokenStructure, ISignIn>({
+    LogIn: build.mutation<TokenStructure, SignInStructure>({
       query: (data) => ({
         url: "/login",
         method: "POST",
@@ -29,7 +29,7 @@ export const authApiService = createApi({
         }
       },
     }),
-    AuthMe: build.query<IUser, void>({
+    AuthMe: build.query<User, void>({
       query: () => ({
         url: "/auth/me",
         method: "GET",

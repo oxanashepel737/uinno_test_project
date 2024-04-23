@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface IToast {
+type Toast = {
   type: "error" | "success";
   text: string;
-}
+};
 
-interface IToastState {
-  toast: IToast | null;
-}
+type ToastState = {
+  toast: Toast | null;
+};
 
-const initialState: IToastState = {
+const initialState: ToastState = {
   toast: null,
 };
 
@@ -17,7 +17,7 @@ const toastSlice = createSlice({
   name: "toast",
   initialState,
   reducers: {
-    showToast: (state, action: PayloadAction<IToast>) => {
+    showToast: (state, action: PayloadAction<Toast>) => {
       state.toast = action.payload;
     },
     hideToast: (state) => {

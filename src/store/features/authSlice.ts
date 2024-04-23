@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ITokenStructure } from "../../types";
+import { TokenStructure } from "../../types";
 import { getToken } from "../localStorage.ts";
 
-interface IAuthState {
+type AuthState = {
   accessToken: string | null;
-  tokenStructure: ITokenStructure | null;
-}
+  tokenStructure: TokenStructure | null;
+};
 
 const accessToken = getToken();
 
-const initialState: IAuthState = {
+const initialState: AuthState = {
   accessToken,
   tokenStructure: null,
 };
@@ -18,7 +18,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setSession: (state, action: PayloadAction<IAuthState>) => {
+    setSession: (state, action: PayloadAction<AuthState>) => {
       state.accessToken = action.payload.accessToken;
       state.tokenStructure = action.payload.tokenStructure;
     },

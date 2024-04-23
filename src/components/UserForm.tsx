@@ -2,18 +2,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { userUpdateValidation, userValidation } from "../validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IUser, IUserPayload } from "../types";
+import { User, UserPayload } from "../types";
 import { useEffect } from "react";
 import { BackButton, SaveButton } from "./Buttons.tsx";
 
-interface IUserForm {
-  onSubmit: (values: IUserPayload) => void;
-  data?: IUser;
+type UserForm = {
+  onSubmit: (values: UserPayload) => void;
+  data?: User;
   isLoading: boolean;
   title: string;
-}
+};
 
-const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
+export const UserForm = ({ onSubmit, data, isLoading, title }: UserForm) => {
   const validation = data ? userUpdateValidation : userValidation;
   const {
     register,
@@ -114,4 +114,3 @@ const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
     </form>
   );
 };
-export default UserForm;

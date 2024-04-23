@@ -2,7 +2,7 @@ import { useGetAllPostsQuery } from "../../../store/services/postsQuery.ts";
 import { useNavigate } from "react-router-dom";
 import { BigLoader } from "../../../components/Loader.tsx";
 import PostCard from "../../../components/PostCard.tsx";
-import ListPageComponent from "../../../components/ListPageComponent.tsx";
+import { ListPageComponent } from "../../../components/ListPageComponent.tsx";
 
 const PostsList = () => {
   const navigate = useNavigate();

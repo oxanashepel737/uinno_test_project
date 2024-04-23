@@ -1,20 +1,20 @@
 import { ReactNode } from "react";
 
-interface IListPageComponent {
+type ListPageComponent = {
   title: string;
   button_name: string;
   isRendering: boolean;
   onGoToCreate: () => void;
   children: ReactNode;
-}
+};
 
-const ListPageComponent = ({
+export const ListPageComponent = ({
   title,
   button_name,
   isRendering,
   onGoToCreate,
   children,
-}: IListPageComponent) => {
+}: ListPageComponent) => {
   return (
     <div className="flex flex-col p-10">
       <div className="flex flex-row">
@@ -42,4 +42,3 @@ const ListPageComponent = ({
     </div>
   );
 };
-export default ListPageComponent;

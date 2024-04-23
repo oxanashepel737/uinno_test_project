@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../store/hooks.ts";
 
-const AuthLayout = () => {
+export const AuthLayout = () => {
   const isAuthorized = useAppSelector((state) => state.authState.accessToken);
   return (
     <>
@@ -15,4 +15,3 @@ const AuthLayout = () => {
     </>
   );
 };
-export default AuthLayout;

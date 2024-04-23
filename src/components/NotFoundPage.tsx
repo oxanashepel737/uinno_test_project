@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-const NotFoundPage = () => {
+export const NotFoundPage = () => {
   const navigate = useNavigate();
 
   const onBackHome = () => {
@@ -23,4 +23,3 @@ const NotFoundPage = () => {
     </div>
   );
 };
-export default NotFoundPage;

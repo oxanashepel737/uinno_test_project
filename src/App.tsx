@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import AuthLayout from "./_auth/AuthLayout.tsx";
-import RootLayout from "./_root/RootLayout.tsx";
+import { AuthLayout } from "./_auth/AuthLayout.tsx";
+import { RootLayout } from "./_root/RootLayout.tsx";
 import {
   CreateUser,
   UserProfile,
@@ -9,9 +9,9 @@ import {
   PostProfile,
   PostsList,
 } from "./_root/features";
-import SignIn from "./_auth/features/SignIn";
+import { SignIn } from "./_auth/features/SignIn";
 import { PathEnums } from "./constants";
-import NotFoundPage from "./components/NotFoundPage.tsx";
+import { NotFoundPage } from "./components/NotFoundPage.tsx";
 
 function App() {
   return (

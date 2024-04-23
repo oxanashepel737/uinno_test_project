@@ -1,7 +1,7 @@
-import { IPost } from "../types";
+import { Post } from "../types";
 import { useNavigate } from "react-router-dom";
 import { ReactNode, useCallback, useState } from "react";
-import Modal from "./Modal.tsx";
+import { Modal } from "./Modal.tsx";
 import { useDeletePostMutation } from "../store/services/postsQuery.ts";
 import { useAuthMeQuery } from "../store/services/authQuery.ts";
 import { BigLoader } from "./Loader.tsx";
@@ -61,7 +61,7 @@ const usePostCard = ({ id }: { id: number }) => {
   return { onGoToUpdatePostPage, onChangeStateDeleteModal, isOpen };
 };
 
-const PostCard = ({ data }: { data: IPost }) => {
+const PostCard = ({ data }: { data: Post }) => {
   const { onChangeStateDeleteModal, onGoToUpdatePostPage, isOpen } =
     usePostCard({
       id: data.id,

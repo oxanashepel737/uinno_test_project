@@ -3,17 +3,17 @@ import { z } from "zod";
 import { postValidation } from "../validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { IPost, IPostPayload } from "../types";
+import { Post, PostPayload } from "../types";
 import { BackButton, SaveButton } from "./Buttons.tsx";
 
-interface IPostForm {
-  onSubmit: (values: IPostPayload) => void;
-  data?: IPost;
+type PostForm = {
+  onSubmit: (values: PostPayload) => void;
+  data?: Post;
   isLoading: boolean;
   title: string;
-}
+};
 
-const PostForm = ({ onSubmit, data, isLoading, title }: IPostForm) => {
+export const PostForm = ({ onSubmit, data, isLoading, title }: PostForm) => {
   const {
     register,
     handleSubmit,
@@ -82,4 +82,3 @@ const PostForm = ({ onSubmit, data, isLoading, title }: IPostForm) => {
     </form>
   );
 };
-export default PostForm;

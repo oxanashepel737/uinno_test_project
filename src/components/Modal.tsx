@@ -1,4 +1,4 @@
-const Modal = ({
+export const Modal = ({
   onClose,
   title,
   description,
@@ -70,4 +70,3 @@ const Modal = ({
     </div>
   );
 };
-export default Modal;

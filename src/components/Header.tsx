@@ -47,7 +47,7 @@ const useHeader = () => {
   return { onLogout };
 };
 
-const Header = () => {
+export const Header = () => {
   const { onLogout } = useHeader();
   return (
     <nav className="bg-light-1 border-gray-200 dark:bg-dark-4">
@@ -72,4 +72,3 @@ const Header = () => {
     </nav>
   );
 };
-export default Header;
