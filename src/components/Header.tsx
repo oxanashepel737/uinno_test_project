@@ -6,11 +6,37 @@ import { clearSession } from "../store/features/authSlice.ts";
 import { postsApiService } from "../store/services/postsQuery.ts";
 import { usersApiService } from "../store/services/usersQuery.ts";
 import { BigLoader } from "./Loader.tsx";
+import { ReactNode } from "react";
 
-const Header = () => {
-  const dispatch = useDispatch();
+const LinkComponent = ({ title, path }: { title: string; path: string }) => {
   const location = useLocation();
+  return (
+    <li>
+      <Link
+        to={path}
+        className={
+          path === location.pathname ? "selected_router_link" : "router_link"
+        }
+        aria-current="page"
+      >
+        {title}
+      </Link>
+    </li>
+  );
+};
+
+const RenderRoleHeader = ({ children }: { children: ReactNode }) => {
   const { isLoading, data } = useAuthMeQuery();
+  if (isLoading) {
+    return <BigLoader />;
+  }
+  {
+    return data?.role === "admin" && children;
+  }
+};
+
+const useHeader = () => {
+  const dispatch = useDispatch();
   const onLogout = () => {
     dispatch(authApiService.util.resetApiState());
     dispatch(postsApiService.util.resetApiState());
@@ -18,9 +44,11 @@ const Header = () => {
     localStorage.clear();
     dispatch(clearSession());
   };
-  if (isLoading) {
-    return <BigLoader />;
-  }
+  return { onLogout };
+};
+
+const Header = () => {
+  const { onLogout } = useHeader();
   return (
     <nav className="bg-light-1 border-gray-200 dark:bg-dark-4">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -34,33 +62,10 @@ const Header = () => {
           id="navbar-cta"
         >
           <ul className="navbar">
-            <li>
-              <Link
-                to={PathEnums.Posts}
-                className={
-                  PathEnums.Posts === location.pathname
-                    ? "selected_router_link"
-                    : "router_link"
-                }
-                aria-current="page"
-              >
-                Posts
-              </Link>
-            </li>
-            {data?.role === "admin" && (
-              <li>
-                <Link
-                  to={PathEnums.Users}
-                  className={
-                    PathEnums.Users === location.pathname
-                      ? "selected_router_link"
-                      : "router_link"
-                  }
-                >
-                  Users
-                </Link>
-              </li>
-            )}
+            <LinkComponent title={"Posts"} path={PathEnums.Posts} />
+            <RenderRoleHeader>
+              <LinkComponent title={"Users"} path={PathEnums.Users} />
+            </RenderRoleHeader>
           </ul>
         </div>
       </div>

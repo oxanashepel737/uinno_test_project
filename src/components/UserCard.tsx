@@ -5,32 +5,54 @@ import { useDeleteUserMutation } from "../store/services/usersQuery.ts";
 import Modal from "./Modal.tsx";
 import { DeleteButton, UpdateButton } from "./Buttons.tsx";
 
-const UserCard = ({ data }: { data: IUser }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const DeleteModalUser = ({
+  id,
+  isOpen,
+  onChangeStateDeleteModal,
+}: {
+  id: number;
+  onChangeStateDeleteModal: () => void;
+  isOpen: boolean;
+}) => {
   const [deleteUser] = useDeleteUserMutation();
-  const navigate = useNavigate();
-  const onGoToUpdateUserPage = useCallback(() => {
-    navigate(`/users/${data?.id}`);
-  }, [data?.id, navigate]);
-  const onOpenDeleteModal = useCallback(() => {
-    setIsOpen(true);
-  }, []);
-  const onCloseDeleteModal = useCallback(() => {
-    setIsOpen(false);
-  }, []);
   const onDeleteUser = useCallback(() => {
-    deleteUser(data?.id);
-  }, [data?.id, deleteUser]);
+    deleteUser(id);
+  }, [id, deleteUser]);
   return (
     <>
       {isOpen && (
         <Modal
-          onClose={() => onCloseDeleteModal()}
+          onClose={() => onChangeStateDeleteModal()}
           title={"Delete User"}
           description={"Are you sure you want to delete this user?"}
           onDelete={() => onDeleteUser()}
         />
       )}
+    </>
+  );
+};
+
+const useUserCard = ({ id }: { id: number }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const onGoToUpdateUserPage = useCallback(() => {
+    navigate(`/users/${id}`);
+  }, [id, navigate]);
+  const onChangeStateDeleteModal = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+  return { onChangeStateDeleteModal, onGoToUpdateUserPage, isOpen };
+};
+const UserCard = ({ data }: { data: IUser }) => {
+  const { isOpen, onGoToUpdateUserPage, onChangeStateDeleteModal } =
+    useUserCard({ id: data.id });
+  return (
+    <>
+      <DeleteModalUser
+        id={data.id}
+        isOpen={isOpen}
+        onChangeStateDeleteModal={onChangeStateDeleteModal}
+      />
       <div className="card_container">
         <div className="card">
           <div className="flex w-full items-center justify-between space-x-6 p-6">
@@ -55,7 +77,7 @@ const UserCard = ({ data }: { data: IUser }) => {
           </div>
           <div className="flex-center space-x-6 py-4 px-2">
             <UpdateButton onGoToUpdatePostPage={onGoToUpdateUserPage} />
-            <DeleteButton onOpenDeleteModal={onOpenDeleteModal} />
+            <DeleteButton onOpenDeleteModal={onChangeStateDeleteModal} />
           </div>
         </div>
       </div>
