@@ -2,10 +2,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { userUpdateValidation, userValidation } from "../validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader } from "./Loader.tsx";
-import { useNavigate } from "react-router-dom";
 import { IUser, IUserPayload } from "../types";
 import { useEffect } from "react";
+import { BackButton, SaveButton } from "./Buttons.tsx";
 
 interface IUserForm {
   onSubmit: (values: IUserPayload) => void;
@@ -15,7 +14,6 @@ interface IUserForm {
 }
 
 const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
-  const navigate = useNavigate();
   const validation = data ? userUpdateValidation : userValidation;
   const {
     register,
@@ -40,9 +38,6 @@ const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
       });
     }
   }, [data, reset]);
-  const onBack = () => {
-    navigate(-1);
-  };
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
       <div className="space-y-12 py-10 px-20">
@@ -107,22 +102,12 @@ const UserForm = ({ onSubmit, data, isLoading, title }: IUserForm) => {
             </div>
           </div>
           <div className="md:mt-28 mt-10 flex flex-center gap-x-6 col-span-4 ">
-            <button
-              type="button"
-              className="cancel_button md:w-32 w-20"
-              onClick={onBack}
-            >
-              Cancel
-            </button>
-            <button type="submit" className="main_button md:w-32 w-20">
-              {isLoading ? (
-                <div className="flex-center gap-2">
-                  <Loader />
-                </div>
-              ) : (
-                "Save"
-              )}
-            </button>
+            <BackButton />
+            <SaveButton
+              isLoading={isLoading}
+              className={"main_button md:w-32 w-20"}
+              text={"Save"}
+            />
           </div>
         </div>
       </div>

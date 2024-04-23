@@ -5,18 +5,19 @@ import Modal from "./Modal.tsx";
 import { useDeletePostMutation } from "../store/services/postsQuery.ts";
 import { useAuthMeQuery } from "../store/services/authQuery.ts";
 import { BigLoader } from "./Loader.tsx";
+import { DeleteButton, UpdateButton } from "./Buttons.tsx";
 
 const PostCard = ({ data }: { data: IPost }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [deletePost] = useDeletePostMutation();
   const { isLoading, data: dataMe } = useAuthMeQuery();
   const navigate = useNavigate();
-  const onGoToUpdatePostPage = () => {
+  const onGoToUpdatePostPage = useCallback(() => {
     navigate(`/posts/${data?.id}`);
-  };
-  const onOpenDeleteModal = () => {
+  }, [data?.id, navigate]);
+  const onOpenDeleteModal = useCallback(() => {
     setIsOpen(true);
-  };
+  }, []);
   const onCloseDeleteModal = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -45,20 +46,10 @@ const PostCard = ({ data }: { data: IPost }) => {
             </div>
             {dataMe?.role === "admin" || dataMe?.id === data.userId ? (
               <div className="flex-center space-x-6">
-                <button
-                  className="main_button w-28"
-                  onClick={onGoToUpdatePostPage}
-                >
-                  Update
-                </button>
-                <button
-                  className="cancel_button w-28"
-                  onClick={onOpenDeleteModal}
-                >
-                  Delete
-                </button>
+                <UpdateButton onGoToUpdatePostPage={onGoToUpdatePostPage} />
+                <DeleteButton onOpenDeleteModal={onOpenDeleteModal} />
               </div>
-            ) : undefined}
+            ) : null}
           </div>
         </div>
       </div>

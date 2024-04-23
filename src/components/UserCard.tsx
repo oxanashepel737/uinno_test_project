@@ -3,17 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useDeleteUserMutation } from "../store/services/usersQuery.ts";
 import Modal from "./Modal.tsx";
+import { DeleteButton, UpdateButton } from "./Buttons.tsx";
 
 const UserCard = ({ data }: { data: IUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [deleteUser] = useDeleteUserMutation();
   const navigate = useNavigate();
-  const onGoToUpdateUserPage = () => {
+  const onGoToUpdateUserPage = useCallback(() => {
     navigate(`/users/${data?.id}`);
-  };
-  const onOpenDeleteModal = () => {
+  }, [data?.id, navigate]);
+  const onOpenDeleteModal = useCallback(() => {
     setIsOpen(true);
-  };
+  }, []);
   const onCloseDeleteModal = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -53,12 +54,8 @@ const UserCard = ({ data }: { data: IUser }) => {
             </div>
           </div>
           <div className="flex-center space-x-6 py-4 px-2">
-            <button className="main_button w-28" onClick={onGoToUpdateUserPage}>
-              Update
-            </button>
-            <button className="cancel_button w-28" onClick={onOpenDeleteModal}>
-              Delete
-            </button>
+            <UpdateButton onGoToUpdatePostPage={onGoToUpdateUserPage} />
+            <DeleteButton onOpenDeleteModal={onOpenDeleteModal} />
           </div>
         </div>
       </div>

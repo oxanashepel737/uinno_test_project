@@ -1,11 +1,10 @@
-import { Loader } from "./Loader.tsx";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { postValidation } from "../validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { IPost, IPostPayload } from "../types";
+import { BackButton, SaveButton } from "./Buttons.tsx";
 
 interface IPostForm {
   onSubmit: (values: IPostPayload) => void;
@@ -15,10 +14,6 @@ interface IPostForm {
 }
 
 const PostForm = ({ onSubmit, data, isLoading, title }: IPostForm) => {
-  const navigate = useNavigate();
-  const onBack = () => {
-    navigate(-1);
-  };
   const {
     register,
     handleSubmit,
@@ -74,22 +69,12 @@ const PostForm = ({ onSubmit, data, isLoading, title }: IPostForm) => {
             </div>
 
             <div className="mt-6 flex md:justify-end gap-x-6 col-span-4 ">
-              <button
-                type="button"
-                className="cancel_button md:w-32 w-20"
-                onClick={onBack}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="main_button md:w-32 w-20">
-                {isLoading ? (
-                  <div className="flex-center gap-2">
-                    <Loader />
-                  </div>
-                ) : (
-                  "Save"
-                )}
-              </button>
+              <BackButton />
+              <SaveButton
+                isLoading={isLoading}
+                className={"main_button md:w-32 w-20"}
+                text={"Save"}
+              />
             </div>
           </div>
         </div>

@@ -3,21 +3,12 @@ import { BigLoader } from "../../../components/Loader.tsx";
 import UserCard from "../../../components/UserCard.tsx";
 import ListPageComponent from "../../../components/ListPageComponent.tsx";
 import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
 import { useProtectedRoute } from "../../../hook";
 
 const UsersList = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllUsersQuery();
   useProtectedRoute();
-  const CardSection = useCallback(() => {
-    return (
-      <section className="flex flex-wrap content-start py-10">
-        {data?.map((user) => <UserCard key={user.id} data={user} />)}
-      </section>
-    );
-  }, [data]);
-
   if (isLoading) {
     return <BigLoader />;
   }
@@ -29,10 +20,13 @@ const UsersList = () => {
       <ListPageComponent
         title={"Users list"}
         button_name={"Add new user"}
-        Card={CardSection}
         isRendering={!!(data && data.length > 0)}
         onGoToCreate={onGoToCreateUser}
-      />
+      >
+        <section className="flex flex-wrap content-start py-10">
+          {data?.map((user) => <UserCard key={user.id} data={user} />)}
+        </section>
+      </ListPageComponent>
     </>
   );
 };

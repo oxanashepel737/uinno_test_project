@@ -1,19 +1,19 @@
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 
 interface IListPageComponent {
   title: string;
   button_name: string;
-  Card: () => ReactElement;
   isRendering: boolean;
   onGoToCreate: () => void;
+  children: ReactNode;
 }
 
 const ListPageComponent = ({
   title,
   button_name,
-  Card,
   isRendering,
   onGoToCreate,
+  children,
 }: IListPageComponent) => {
   return (
     <div className="flex flex-col p-10">
@@ -26,7 +26,7 @@ const ListPageComponent = ({
         </div>
       </div>
       {isRendering ? (
-        <Card />
+        children
       ) : (
         <div className="flex-col flex-center h-96">
           <img
