@@ -3,12 +3,14 @@ import {
   isRejectedWithValue,
   MiddlewareAPI,
   Middleware,
+  createListenerMiddleware,
 } from "@reduxjs/toolkit";
 import { authApiService } from "./services/authQuery.ts";
-import authSlice from "./features/authSlice.ts";
+import authSlice, { clearSession } from "./features/authSlice.ts";
 import toastSlice, { showToast } from "./features/toastSlice.ts";
 import { postsApiService } from "./services/postsQuery.ts";
 import { usersApiService } from "./services/usersQuery.ts";
+import { getToken, setToken } from "./localStorage.ts";
 
 type ApiErrorPayload = {
   data: {
@@ -16,6 +18,32 @@ type ApiErrorPayload = {
   };
 };
 
+export const listenerMiddleware = createListenerMiddleware();
+const login = authApiService.endpoints?.LogIn.matchFulfilled;
+listenerMiddleware.startListening({
+  matcher: login,
+  effect: (action) => {
+    setToken(action.payload.value);
+  },
+});
+listenerMiddleware.startListening({
+  actionCreator: clearSession,
+  effect: () => {
+    localStorage.clear();
+  },
+});
+
+const reHydrateStore = () => {
+  const token = getToken();
+  if (token !== null) {
+    return {
+      authState: {
+        isAuthenticated: true,
+        token: token,
+      },
+    };
+  }
+};
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
@@ -44,12 +72,14 @@ export const store = configureStore({
     authState: authSlice,
     toastState: toastSlice,
   },
+  preloadedState: reHydrateStore(),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
       authApiService.middleware,
       postsApiService.middleware,
       usersApiService.middleware,
       rtkQueryErrorLogger,
+      listenerMiddleware.middleware,
     ]),
 });
 

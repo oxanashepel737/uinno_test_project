@@ -2,7 +2,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../store/hooks.ts";
 
 export const AuthLayout = () => {
-  const isAuthorized = useAppSelector((state) => state.authState.accessToken);
+  const isAuthorized = useAppSelector(
+    (state) => state.authState.isAuthenticated,
+  );
   return (
     <>
       {isAuthorized ? (

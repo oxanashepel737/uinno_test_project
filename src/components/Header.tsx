@@ -41,7 +41,6 @@ const useHeader = () => {
     dispatch(authApiService.util.resetApiState());
     dispatch(postsApiService.util.resetApiState());
     dispatch(usersApiService.util.resetApiState());
-    localStorage.clear();
     dispatch(clearSession());
   };
   return { onLogout };

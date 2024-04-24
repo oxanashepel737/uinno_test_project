@@ -1,7 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { SignInStructure, TokenStructure, User } from "../../types";
 import { setSession } from "../features/authSlice.ts";
-import { setToken } from "../localStorage.ts";
 import { BaseQuery } from "./baseQuery.ts";
 
 export const authApiService = createApi({
@@ -17,11 +16,10 @@ export const authApiService = createApi({
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          setToken(data.value);
           dispatch(
             setSession({
-              accessToken: data.value,
-              tokenStructure: data,
+              token: data.value,
+              isAuthenticated: true,
             }),
           );
         } catch (error) {

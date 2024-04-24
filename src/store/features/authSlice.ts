@@ -1,17 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TokenStructure } from "../../types";
-import { getToken } from "../localStorage.ts";
 
 type AuthState = {
-  accessToken: string | null;
-  tokenStructure: TokenStructure | null;
+  isAuthenticated: boolean;
+  token: string | null;
 };
 
-const accessToken = getToken();
-
 const initialState: AuthState = {
-  accessToken,
-  tokenStructure: null,
+  isAuthenticated: false,
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -19,12 +15,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setSession: (state, action: PayloadAction<AuthState>) => {
-      state.accessToken = action.payload.accessToken;
-      state.tokenStructure = action.payload.tokenStructure;
+      state.isAuthenticated = action.payload.isAuthenticated;
+      state.token = action.payload.token;
     },
     clearSession: (state) => {
-      state.accessToken = null;
-      state.tokenStructure = null;
+      state.isAuthenticated = false;
+      state.token = null;
     },
   },
 });

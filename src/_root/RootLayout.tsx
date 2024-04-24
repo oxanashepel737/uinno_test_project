@@ -3,7 +3,9 @@ import { Header } from "../components/Header.tsx";
 import { useAppSelector } from "../store/hooks.ts";
 
 export const RootLayout = () => {
-  const isAuthorized = useAppSelector((state) => state.authState.accessToken);
+  const isAuthorized = useAppSelector(
+    (state) => state.authState.isAuthenticated,
+  );
   return (
     <>
       {isAuthorized ? (
